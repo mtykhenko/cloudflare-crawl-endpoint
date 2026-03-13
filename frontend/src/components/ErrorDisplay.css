@@ -1,0 +1,100 @@
+.error-display {
+  background: #fff5f5;
+  border: 2px solid #e74c3c;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(231, 76, 60, 0.1);
+}
+
+.error-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.error-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.error-text {
+  flex: 1;
+}
+
+.error-title {
+  margin: 0 0 0.5rem 0;
+  color: #c0392b;
+  font-size: 1.2rem;
+}
+
+.error-message {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+.error-code {
+  margin: 0;
+  color: #666;
+  font-size: 0.85rem;
+  font-family: 'Courier New', monospace;
+}
+
+.error-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.retry-button,
+.clear-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.retry-button {
+  background: #3498db;
+  color: white;
+}
+
+.retry-button:hover {
+  background: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+}
+
+.clear-button {
+  background: #ecf0f1;
+  color: #333;
+}
+
+.clear-button:hover {
+  background: #bdc3c7;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .error-display {
+    padding: 1rem;
+  }
+  
+  .error-content {
+    flex-direction: column;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+  }
+  
+  .retry-button,
+  .clear-button {
+    width: 100%;
+  }
+}

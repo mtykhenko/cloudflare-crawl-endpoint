@@ -1,0 +1,113 @@
+.status-indicator {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.status-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.status-text {
+  flex: 1;
+}
+
+.status-text h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.3rem;
+}
+
+.status-description {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.progress-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.progress-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.progress-numbers {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 6px;
+}
+
+.progress-percentage {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.browser-time {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.browser-time-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.browser-time-value {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .status-indicator {
+    padding: 1rem;
+  }
+  
+  .status-icon {
+    font-size: 2rem;
+  }
+  
+  .status-text h3 {
+    font-size: 1.1rem;
+  }
+}
