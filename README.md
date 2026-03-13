@@ -162,6 +162,62 @@ uvicorn app.main:app --reload --port 8000
 # Or run with custom log level
 uvicorn app.main:app --reload --port 8000 --log-level debug
 ```
+### Running Tests
+
+The backend includes comprehensive test coverage using pytest. Tests can be run locally or in Docker containers.
+
+#### Docker Container Testing (Recommended)
+
+Running tests in containers ensures environment consistency and saves reports to mounted directories:
+
+```bash
+# Run tests in Docker container
+docker-compose --profile test run --rm backend-test
+
+# View HTML coverage report
+open backend/tests/reports/coverage/index.html
+
+# View test results
+cat backend/tests/reports/junit/results.xml
+```
+
+**Benefits:**
+- ✅ Same environment as production
+- ✅ No local dependency conflicts
+- ✅ Test reports saved locally in `backend/tests/reports/`
+- ✅ Reproducible across all developer machines
+- ✅ CI/CD ready
+
+#### Local Testing
+
+```bash
+cd backend
+
+# Install test dependencies
+pip install -r requirements-dev.txt
+
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=app --cov-report=html --cov-report=term-missing
+
+# Run specific test file
+pytest tests/test_models.py
+
+# Run with verbose output
+pytest -v
+```
+
+**Test Coverage:**
+- ✅ **Models**: Pydantic validation tests
+- ✅ **Cloudflare Client**: API integration tests with mocking
+- ✅ **Crawl Service**: Business logic tests
+- ✅ **API Routes**: Endpoint tests with FastAPI TestClient
+- ✅ **Exception Handlers**: Error handling tests
+
+See [`backend/tests/README.md`](backend/tests/README.md) for detailed testing documentation.
+
 
 Backend will be available at:
 - **API**: http://localhost:8000

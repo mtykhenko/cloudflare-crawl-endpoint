@@ -35,6 +35,24 @@ services:
       - crawl-network
     restart: unless-stopped
 
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test
+    container_name: crawl-site-backend-test
+    volumes:
+      - ./backend:/app
+      - ./backend/tests/reports:/app/tests/reports
+    env_file:
+      - ./backend/.env
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - crawl-network
+    command: pytest --cov=app --cov-report=html:/app/tests/reports/coverage --cov-report=term-missing --cov-report=xml:/app/tests/reports/coverage.xml --junit-xml=/app/tests/reports/junit/results.xml -v
+    profiles:
+      - test
+
 networks:
   crawl-network:
     driver: bridge

@@ -46,10 +46,24 @@ crawl-site/
 │   │   └── services/          # Business logic layer
 │   │       ├── __init__.py
 │   │       └── crawl_service.py # Crawl operations service
-│   ├── tests/                 # Backend tests (to be implemented)
+│   ├── tests/                 # Backend tests
+│   │   ├── __init__.py
+│   │   ├── conftest.py        # Shared test fixtures
+│   │   ├── test_*.py          # Test files
+│   │   ├── api/               # API layer tests
+│   │   ├── services/          # Service layer tests
+│   │   ├── reports/           # Test reports (gitignored)
+│   │   │   ├── coverage/      # HTML coverage reports
+│   │   │   ├── junit/         # JUnit XML reports
+│   │   │   └── coverage.xml   # Coverage XML
+│   │   ├── .coveragerc        # Coverage configuration
+│   │   └── README.md          # Testing documentation
 │   ├── requirements.txt       # Python dependencies
-│   ├── Dockerfile            # Backend container definition
-│   └── .env.example          # Environment variables template
+│   ├── requirements-dev.txt   # Development dependencies
+│   ├── pytest.ini             # Pytest configuration
+│   ├── Dockerfile             # Production container definition
+│   ├── Dockerfile.test        # Test container definition
+│   └── .env.example           # Environment variables template
 ├── frontend/                  # React frontend
 │   ├── src/
 │   │   ├── components/       # React components
@@ -217,23 +231,31 @@ Total Files: 40+
 
 ### Docker Development
 
-1. **Backend Container**:
+1. **Backend Container** ([`Dockerfile`](backend/Dockerfile)):
    - Multi-stage build for optimization
    - Non-root user for security
    - Health check configured
    - Alpine base for small size
+   - Production dependencies only
 
-2. **Frontend Container**:
+2. **Backend Test Container** ([`Dockerfile.test`](backend/Dockerfile.test)):
+   - Based on production Dockerfile
+   - Includes dev dependencies (pytest, coverage, etc.)
+   - Configured for test execution
+   - Outputs reports to mounted volumes
+
+3. **Frontend Container** ([`Dockerfile`](frontend/Dockerfile)):
    - Build stage with Node
    - Serve stage with Nginx
    - Static asset optimization
    - Security headers configured
 
-3. **Docker Compose**:
+4. **Docker Compose** ([`docker-compose.yml`](docker-compose.yml)):
    - Service dependencies defined
    - Health checks configured
    - Network isolation
    - Volume mounts for development
+   - Test profile for isolated test execution
 
 ## Common Tasks
 
@@ -373,7 +395,7 @@ Potential improvements:
 
 ## Dependencies
 
-### Backend Dependencies
+### Backend Dependencies ([`requirements.txt`](backend/requirements.txt))
 - fastapi==0.109.0
 - uvicorn[standard]==0.27.0
 - httpx==0.26.0
@@ -381,7 +403,15 @@ Potential improvements:
 - pydantic-settings==2.1.0
 - python-dotenv==1.0.0
 
-### Frontend Dependencies
+### Backend Dev Dependencies ([`requirements-dev.txt`](backend/requirements-dev.txt))
+- pytest==7.4.3
+- pytest-asyncio==0.21.1
+- pytest-cov==4.1.0
+- pytest-mock==3.12.0
+- httpx==0.26.0
+- respx==0.20.2
+
+### Frontend Dependencies ([`package.json`](frontend/package.json))
 - react@^18.2.0
 - react-dom@^18.2.0
 - axios@^1.6.5
@@ -394,6 +424,7 @@ Potential improvements:
 - **[`README.md`](README.md)**: User-facing documentation with setup instructions
 - **[`ARCHITECTURE.md`](ARCHITECTURE.md)**: Detailed architecture and design decisions
 - **[`AGENTS.md`](AGENTS.md)**: This file - developer guidance for AI agents
+- **[`backend/tests/README.md`](backend/tests/README.md)**: Comprehensive testing documentation
 
 ## Notes for AI Agents
 
@@ -402,13 +433,15 @@ When working with this codebase:
 1. **Maintain Consistency**: Follow existing patterns and conventions
 2. **Update Documentation**: Keep all documentation files in sync
 3. **Test Changes**: Verify both locally and in Docker
-4. **Security First**: Never expose credentials or tokens
-5. **Error Handling**: Add comprehensive error handling
-6. **Logging**: Use appropriate log levels
-7. **Type Safety**: Use Pydantic models and TypeScript where applicable
-8. **Async Patterns**: Maintain async/await in backend
-9. **Component Structure**: Keep components focused and reusable
-10. **Docker Best Practices**: Multi-stage builds, non-root users, health checks
+4. **Run Tests in Container**: Use `docker-compose --profile test run --rm backend-test` for consistent test execution
+5. **Security First**: Never expose credentials or tokens
+6. **Error Handling**: Add comprehensive error handling
+7. **Logging**: Use appropriate log levels
+8. **Type Safety**: Use Pydantic models and TypeScript where applicable
+9. **Async Patterns**: Maintain async/await in backend
+10. **Component Structure**: Keep components focused and reusable
+11. **Docker Best Practices**: Multi-stage builds, non-root users, health checks
+12. **Test Coverage**: Maintain >90% coverage, reports saved to `backend/tests/reports/`
 
 ## Contact & Support
 
